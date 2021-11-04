@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:peliculapps/models/models.dart';
 //Para que sea un provider valido debe extender de ChangeNotifier pero del paquete de Material
 
 class MoviesProvider extends ChangeNotifier{
@@ -27,11 +28,11 @@ class MoviesProvider extends ChangeNotifier{
     });
 
     final response = await http.get(url);
-    //var response = await http.post(url, body: {'name': 'doodle', 'color': 'blue'});
+   
+    //final Map<String, dynamic> decodeData = json.decode(response.body); //as Map<String, dynamic>;
+    final nowPlayinResponse = NowPlayinResponse.fromJson(response.body);
 
-    final Map<String, dynamic> decodeData = json.decode(response.body); //as Map<String, dynamic>;
-
-    print(decodeData['dates']);
+    print(nowPlayinResponse.results[0].title);
 
   }
 
