@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:peliculapps/providers/movies_provider.dart';
 import 'package:peliculapps/widgets/widgets.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+  //El provider siempre debe ir a este nivel porque se necesita el context  
+   final moviesProviders = Provider.of<MoviesProvider>(context);  
+
     return Scaffold(
       appBar: AppBar(
         title: Container(
@@ -22,10 +27,13 @@ class HomeScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
         children: [
-          //TODO CardSwiper
-          CardSwiper(),  
+          //CardSwiper Principales
+          CardSwiper(movies : moviesProviders.onDisplayMovies),  
           //Listado horizontal de películas
-          MovieSlider()
+          //El titulo es opcional, si viene debe mostrar el Widget
+          MovieSlider(moviePopulars : moviesProviders.onPopularDisplay,
+           onNextPage:(){moviesProviders.getDisplayPopulars();} ,
+           titulo: "Populares", )
         ],
       ),
       )
