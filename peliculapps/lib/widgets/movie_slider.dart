@@ -86,6 +86,9 @@ class _MoviePoster extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    movie.heroID = 'popular-${movie.id}';
+
     return Container(
                   width: 130,
                   height: 190,
@@ -96,17 +99,20 @@ class _MoviePoster extends StatelessWidget {
                       
                       GestureDetector(
                         //onTap: () => Navigator.pushNamed(context, 'details',arguments: 'movie-instance'),
-                          onTap: () => Navigator.pushNamed(context, 'details',arguments: this.movie),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: FadeInImage(
-                            placeholder: AssetImage('lib/assets/no-image.jpg'),
-                            //image: NetworkImage('https://via.placeholder.com/300x400'),
-                             image: NetworkImage(movie.fullPosterImg),
-                            width: 130,
-                            height: 190,
-                            fit: BoxFit.cover,
-                            ),
+                        onTap: () => Navigator.pushNamed(context, 'details',arguments: this.movie),
+                        child: Hero(
+                          tag: movie.heroID!,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: FadeInImage(
+                              placeholder: AssetImage('lib/assets/no-image.jpg'),
+                              //image: NetworkImage('https://via.placeholder.com/300x400'),
+                               image: NetworkImage(movie.fullPosterImg),
+                              width: 130,
+                              height: 190,
+                              fit: BoxFit.cover,
+                              ),
+                          ),
                         ),
                       ),
 

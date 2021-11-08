@@ -1,7 +1,9 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:peliculapps/helpers/debouncer.dart';
 import 'package:peliculapps/models/models.dart';
 import 'package:peliculapps/models/search_response.dart';
 //import 'package:peliculapps/models/popular_response.dart';
@@ -19,6 +21,11 @@ class MoviesProvider extends ChangeNotifier{
   Map<int, List<Cast>> movieCast = {};
 
   int _popularPage = 0;
+
+  final debouncer = Debouncer(duration: Duration(milliseconds: 500));
+
+  final StreamController<List<Movie>> _suggetionStreamController = new StreamController.broadcast();
+  Stream<List<Movie>> get suggetionStream => this._suggetionStreamController.stream;
 
   MoviesProvider(){
     print('Movies Provider inicializado');
@@ -112,6 +119,31 @@ class MoviesProvider extends ChangeNotifier{
 
     return searchResponse.results;
 
+  }
+   
+ //Se va a mandar llamar cada que se toca una tecla
+  void getSuggetionByQuery (String query){
+    //inicializar valor  
+    debouncer.value="";
+
+    //El método que se va a llamar cuando pase el Duration
+    debouncer.onValue = (valueEmitido) async{
+        //cuando el debouncer emita un valor
+        final results = await this.searchMovies(valueEmitido);
+        this._suggetionStreamController.add(results);
+    };
+
+    final timer = Timer.periodic(Duration(milliseconds: 300), (_) {
+        debouncer.value = query;
+     });
+
+    /*
+      Al terminar el timepo del timer, el valor de debouncer.value será lo que
+      tenga el query (lo escribe el usuario).
+      Y cuando se cambio el valor del debouncer se dispara el debouncer.value  
+     */  
+
+    Future.delayed(Duration(milliseconds: 301)).then((_) => timer.cancel());
   }
 
   Future<String> _getJasonData(String urlEndPoint, [int page = 1]) async{

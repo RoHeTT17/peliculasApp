@@ -35,6 +35,8 @@ class Movie { //SE CAMBIO EL NOMBRE DE CLASE A Movie
     double voteAverage;
     int voteCount;
 
+    String? heroID;
+
     factory Movie.fromJson(String str) => Movie.fromMap(json.decode(str));
 
     //String toJson() => json.encode(toMap());

@@ -80,20 +80,24 @@ class _PosterAndTitle extends StatelessWidget {
   Widget build(BuildContext context) {
 
   final TextTheme textTheme = Theme.of(context).textTheme;
-
+  
     return Container(
       margin: EdgeInsets.only(top: 20),
       padding: EdgeInsets.symmetric(horizontal: 20.0),
       child: Row(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: FadeInImage(
-              placeholder: AssetImage("lib/assets/no-image.jpg"), 
-              //image: NetworkImage("https://via.placeholder.com/200x300"),
-              image: NetworkImage(moviePT.fullPosterImg),
-              height: 150,
-              ),
+          Hero(
+            tag: moviePT.heroID!,
+            //tag: moviePT.heroID!,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: FadeInImage(
+                placeholder: AssetImage("lib/assets/no-image.jpg"), 
+                //image: NetworkImage("https://via.placeholder.com/200x300"),
+                image: NetworkImage(moviePT.fullPosterImg),
+                height: 150,
+                ),
+            ),
           ),
         
         SizedBox(width: 20,),
