@@ -26,6 +26,7 @@ class CardSwiper extends StatelessWidget {
       );
     }
 
+    //Cuando el notificate listener se dispara, entra a esta opción porque el length es mayor a 0  
     return Container(
       width: double.infinity,
       height: size.height*0.5, //se multiplica por 0.5 para que se la mitad de la pantalla
