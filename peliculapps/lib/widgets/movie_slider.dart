@@ -28,8 +28,6 @@ class _MovieSliderState extends State<MovieSlider> {
             widget.onNextPage();
         }
       });
-
-
     }
 
   @override
@@ -44,7 +42,7 @@ class _MovieSliderState extends State<MovieSlider> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 270,
+      height: 275,
       //color: Colors.red,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -116,11 +114,13 @@ class _MoviePoster extends StatelessWidget {
                         ),
                       ),
 
-                        Text(movie.title,
-                          //"masdjfioasjdfijasdiofjioasdjioasdfjasojdfioasdjofjsoidajfioasdjfio",
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.center, 
+                        Expanded(
+                          child: Text(movie.title,
+                            //"masdjfioasjdfijasdiofjioasdjioasdfjasojdfioasdjofjsoidajfioasdjfio",
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.center, 
+                          ),
                         )
 
                     ],

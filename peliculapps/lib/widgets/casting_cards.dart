@@ -34,7 +34,7 @@ class CastingCards extends StatelessWidget {
         return Container(
           margin: EdgeInsets.only(bottom: 30),
           width: double.infinity,
-          height: 180,
+          height: 190,
           //color: Colors.red,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
