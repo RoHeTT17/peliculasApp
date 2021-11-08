@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:peliculapps/models/models.dart';
+import 'package:peliculapps/models/search_response.dart';
 //import 'package:peliculapps/models/popular_response.dart';
 //Para que sea un provider valido debe extender de ChangeNotifier pero del paquete de Material
 
@@ -14,6 +15,8 @@ class MoviesProvider extends ChangeNotifier{
 
   List<Movie> onDisplayMovies=[];
   List<Movie> onPopularDisplay=[];
+
+  Map<int, List<Cast>> movieCast = {};
 
   int _popularPage = 0;
 
@@ -78,6 +81,36 @@ class MoviesProvider extends ChangeNotifier{
     onPopularDisplay =[...onPopularDisplay,...reponsePopular.results];
     //print(onPopularDisplay[0]);
     notifyListeners();
+
+  }
+
+  Future<List<Cast>> getMovieCast(int movieID) async{
+
+    //Para guardar la data en memoria y no tener que hacer una petición cada vez
+    if(movieCast.containsKey(movieID))
+      return movieCast[movieID]!;
+    //else
+    final jsonData= await this._getJasonData('3/movie/$movieID/credits');
+    final creditsReponse = CreditsReponse.fromJson(jsonData);
+
+    movieCast[movieID] = creditsReponse.cast;
+
+
+    return creditsReponse.cast;
+  }
+
+  Future<List<Movie>> searchMovies(String query) async{
+    final url = Uri.https(_baseUrl, "3/search/movie",{
+      "api_key"  : _apiKey,
+      "language" : _language,
+      "query"    : query 
+
+    });
+
+    final response = await http.get(url);  
+    final searchResponse = SearchReponse.fromJson(response.body);
+
+    return searchResponse.results;
 
   }
 

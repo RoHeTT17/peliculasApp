@@ -20,7 +20,7 @@ class DetailScreen extends StatelessWidget {
                 _OverView(resumen: movie.overview),
                 /*_OverView(),
                 _OverView(),*/
-                CastingCards(),
+                CastingCards(movie.id),
               ])
             )
 
@@ -49,12 +49,13 @@ class _CustomAppBar extends StatelessWidget {
         title: Container(
           width: double.infinity,
           alignment: Alignment.bottomCenter,
-          padding: EdgeInsets.only(bottom: 10),
+          padding: EdgeInsets.only(bottom: 10, left: 10, right: 10),
           color: Colors.black12,
           child:  Text(
             movieBar.title,
             //'movie.title',
              style: TextStyle(fontSize: 16),
+             textAlign: TextAlign.center,
             ),
           
         ),
